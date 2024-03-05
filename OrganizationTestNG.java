@@ -1,0 +1,84 @@
+package vtigercrm;
+
+import java.io.IOException;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Test;
+
+import common_utils.Base;
+import common_utils.ExcelUtil;
+import common_utils.JavaUtil;
+import common_utils.PropertyFileUtil;
+import common_utils.WebDriverUtil;
+
+public class OrganizationTestNG extends Base{
+	
+	
+	WebDriverUtil wutil = new WebDriverUtil();
+	ExcelUtil eutil = new ExcelUtil();
+	JavaUtil jutil = new JavaUtil();
+	PropertyFileUtil putil=new PropertyFileUtil();
+	
+	@Test
+	public void OrganizationTest() throws IOException, InterruptedException {
+		
+	/*WebDriver drive = new ChromeDriver();	
+	//To maximize the window
+	//wutil.maximize(driver);
+	//To apply wait for findelement()
+	//wutil.implicitwait(driver);*/
+	
+	//To read data from Property File
+	/*String URL = putil.getDataFromPropertyFile("Url");
+	String USERNAME =putil.getDataFromPropertyFile("Username");
+	String PASSWORD = putil.getDataFromPropertyFile("Password");*/
+	
+	//To read data from Excel File
+	String ORGNAME = eutil.getDataFromExcel("organizations", 0, 1);
+	String GROUP = eutil.getDataFromExcel("organizations", 1, 1);
+	
+	
+	//To launch the application
+	/*driver.get(URL);
+	
+	// Login to application 
+	driver.findElement(By.name("user_name")).sendKeys(USERNAME);
+	driver.findElement(By.name("user_password")).sendKeys(PASSWORD);
+	driver.findElement(By.id("submitButton")).click();*/
+	
+	//Click on Organization
+	driver.findElement(By.xpath("(//a[text()='Organizations'])[1]")).click();
+	
+	//Click on Create Organization..(+)
+	driver.findElement(By.cssSelector("img[alt='Create Organization...']")).click();
+	
+	//Enter Organization Name
+	driver.findElement(By.name("accountname")).sendKeys(ORGNAME+jutil.getRandomNumber());
+	
+	//In AssignedTo Click on Group
+	driver.findElement(By.xpath("(//input[@name='assigntype'])[2]")).click();
+	
+	//In the dropdown select Support group
+	WebElement dropdown = driver.findElement(By.name("assigned_group_id"));
+	wutil.handledropdown(dropdown, GROUP);
+	
+	//Click on Save Button
+	driver.findElement(By.xpath("(//input[@name='button'])[1]")).click();
+	
+	/*Thread.sleep(2000);
+	
+	//Mousehover on image
+	WebElement image = driver.findElement(By.cssSelector("img[src='themes/softed/images/user.PNG']"));
+	wutil.mousehover(driver, image);
+	
+	//Click on Signout
+	driver.findElement(By.xpath("//a[text()='Sign Out']")).click();*/
+
+}
+	
+
+}
